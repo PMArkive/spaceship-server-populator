@@ -10,6 +10,7 @@ serverlist = [
     "mge.sappho.io:27015",
     "elo1.sappho.io:27115",
     "elo2.sappho.io:27215",
+    "elo3.sappho.io:27615",
     "dm.sappho.io:27315",
     "dm.sappho.io:27415",
     "dm.sappho.io:28315",
@@ -78,13 +79,13 @@ for server in serverlist:
     islocked    = False;
     threwerror  = True;
 
-    # try querying 10 times with a 3s timeout for servers that may be map changing.
+    # try querying 5 times with a 3s timeout for servers that may be map changing.
     # hostname is where we display our error msg if we get one.
 
     # "tHiS iSn'T pYtHoNiC" shut up
     for tries in range(10):
         try:
-            query = a2s.info(a2s_tuple, timeout=3.0)
+            query = a2s.info(a2s_tuple, timeout=1.0)
             playercount     = query.player_count
             maxplayers      = query.max_players
             hostname        = query.server_name
