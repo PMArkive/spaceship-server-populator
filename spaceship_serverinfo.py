@@ -10,17 +10,15 @@ serverlist = [
     "mge.sappho.io:27015",
     "elo1.sappho.io:27115",
     "elo2.sappho.io:27215",
-    "elo3.sappho.io:27615",
     "dm.sappho.io:27315",
     "dm.sappho.io:27415",
     "dm.sappho.io:28315",
     "dm.sappho.io:28415",
-    "dm.sappho.io:27515",
-    "dm.sappho.io:28215",
     "bb1.sappho.io:27715",
-    "ulti.sappho.io:27815",
     "pub.sappho.io:27915",
-    "jump.sappho.io:28015",
+    "dm.sappho.io:27050",
+    "tf.sappho.io:29015",
+    "tf.sappho.io:29999",
 ]
 
 # oh man this is so ugly but i'd rather do this in python than php
@@ -136,8 +134,12 @@ for server in serverlist:
     # STEAM CONNECT URL AND SERVER URL
     url_column = '<td class="link"> <a href="steam://connect/{}:{}">{}</a> </td>'.format(serverurl, serverport, server)
 
+
     # SERVER HOSTNAME (or error if one was thrown)
-    hostname_column = '<td class="name">{}</td>'.format(hostname)
+    if "The Pub" in hostname:
+        hostname_column = '<td class="rainbow-name">{}</td>'.format(hostname)
+    else:
+        hostname_column = '<td class="name">{}</td>'.format(hostname)
 
     # SERVER MAP
     map_column = '<td class="map">{}</td>'.format(mapname)
@@ -158,10 +160,11 @@ for server in serverlist:
                 {}
             </tr>
 """).format(changeopacity,
-playernum_column,
-url_column,
-hostname_column,
-map_column)
+    playernum_column,
+    url_column,
+    hostname_column,
+    map_column)
+    time.sleep(1.0)
 
 final_string = template_string.format(totalplayers, totalservers, table_string)
 
