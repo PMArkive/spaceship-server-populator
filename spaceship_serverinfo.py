@@ -14,11 +14,13 @@ serverlist = [
     "dm.sappho.io:27415",
     "dm.sappho.io:28315",
     "dm.sappho.io:28415",
+    "tf.sappho.io:27615",
     "bb1.sappho.io:27715",
     "pub.sappho.io:27915",
     "dm.sappho.io:27050",
     "tf.sappho.io:29015",
     "tf.sappho.io:29999",
+    "leaf.sappho.io:27015",
 ]
 
 # oh man this is so ugly but i'd rather do this in python than php
@@ -32,6 +34,7 @@ template_string = (
         <table class="servers">
         <tbody>
             <tr>
+                <th>Game</th>
                 <th>Players</th>
                 <th>Connect Link</th>
                 <th>Server Name</th>
@@ -59,7 +62,6 @@ table_string = ''
 
 for server in serverlist:
     totalservers += 1
-
     # get our url
     serverurl = server.split(':')[0]
 
@@ -88,6 +90,7 @@ for server in serverlist:
             maxplayers      = query.max_players
             hostname        = query.server_name
             mapname         = query.map_name
+            foldername     = query.folder
             islocked        = query.password_protected
             threwerror      = False;
             print('Got info for {}!'.format(str(server)))
@@ -111,6 +114,23 @@ for server in serverlist:
         hostname        = "Query timeout."
 
     #print(hostname)
+
+
+    if "tf" == foldername:
+        gameico = "https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico"
+        gameurl = "https://www.teamfortress.com/"
+    elif "open_fortress" in foldername:
+        gameico = "https://openfortress.fun/images/favicon.ico"
+        gameurl = "https://openfortress.fun"
+    elif "tf2classic" in foldername:
+        gameico = "https://tf2classic.com/favicon-32x32.png"
+        gameurl = "https://tf2classic.com"
+    else:
+        gameico = "https://sappho.io/rsrc/galaxyemoji_new_round.png"
+        gameurl = "https://sappho.io/spaceship"
+
+    gamename_column = '<td class="gametype"><a href="{}"><img src="{}"></a></td>'.format(gameurl, gameico)
+
 
     # don't count or display locked servers
     if islocked:
@@ -158,13 +178,15 @@ for server in serverlist:
                 {}
                 {}
                 {}
+                {}
             </tr>
 """).format(changeopacity,
+    gamename_column,
     playernum_column,
     url_column,
     hostname_column,
     map_column)
-    time.sleep(1.0)
+    time.sleep(0.1)
 
 final_string = template_string.format(totalplayers, totalservers, table_string)
 
