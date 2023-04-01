@@ -7,17 +7,17 @@ import socket
 
 # list of servers. no shit
 serverlist = [
-    "mge.sappho.io:27015",
+    "tf.sappho.io:27015",
     "elo1.sappho.io:27115",
     "elo2.sappho.io:27215",
     "dm.sappho.io:27315",
     "dm.sappho.io:27415",
     "dm.sappho.io:28315",
     "dm.sappho.io:28415",
+    "tf.sappho.io:27515",
     "tf.sappho.io:27615",
     "bb1.sappho.io:27715",
     "pub.sappho.io:27915",
-    "dm.sappho.io:27050",
     "tf.sappho.io:29015",
     "tf.sappho.io:29999",
     "leaf.sappho.io:27015",
@@ -82,6 +82,7 @@ for server in serverlist:
     # try querying 5 times with a 3s timeout for servers that may be map changing.
     # hostname is where we display our error msg if we get one.
 
+    foldername = ""
     # "tHiS iSn'T pYtHoNiC" shut up
     for tries in range(10):
         try:
@@ -90,7 +91,7 @@ for server in serverlist:
             maxplayers      = query.max_players
             hostname        = query.server_name
             mapname         = query.map_name
-            foldername     = query.folder
+            foldername      = query.folder
             islocked        = query.password_protected
             threwerror      = False;
             print('Got info for {}!'.format(str(server)))
